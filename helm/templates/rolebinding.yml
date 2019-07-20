@@ -3,7 +3,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
   name: {{ .Chart.Name }}-access
-  namespace: showks-system
+  namespace: showks
 rules:
 - apiGroups: ["","apps","extensions"]
   resources: ["services","deployments","ingresses"]
@@ -14,7 +14,7 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
   name: {{ .Chart.Name }}-access-binding
-  namespace: showks-system
+  namespace: showks
 subjects:
   - kind: ServiceAccount
     name: default
