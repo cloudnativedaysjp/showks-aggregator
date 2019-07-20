@@ -27,8 +27,8 @@ const k8sApiEndpoint = `/api/v1/watch/namespaces/${K8S_NAMESPACE}/services`;
 const kc = new k8s.KubeConfig();
 kc.loadFromCluster();
 //kc.loadFromDefault();
-const k8sApi = kc.makeApiClient(k8s.Core_v1Api);
-const k8sExtentionsApi = kc.makeApiClient(k8s.Extensions_v1beta1Api);
+const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+const k8sExtentionsApi = kc.makeApiClient(k8s.ExtensionsV1beta1Api);
 
 
 // Instances
@@ -271,8 +271,8 @@ function onNotificationConnection(socket) {
 // Get list of services
 async function getServiceList() {
   console.log('Fetching service list');
-  // public listNamespacedServiceAccount (namespace: string, pretty?: string, _continue?: string, fieldSelector?: string, includeUninitialized?: boolean, labelSelector?: string, limit?: number, resourceVersion?: string, timeoutSeconds?: number, watch?: boolean) : Promise<{ response: http.IncomingMessage; body: V1ServiceAccountList;  }>
-  let res = await k8sApi.listNamespacedService(K8S_NAMESPACE, undefined, undefined, undefined, false, K8S_LABEL_SELECTOR);
+  // public listNamespacedService (namespace: string, includeUninitialized?: boolean, pretty?: string, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, timeoutSeconds?: number, watch?: boolean, options: any = {}) : Promise<{ response: http.IncomingMessage; body: V1ServiceList;  }> {
+  let res = await k8sApi.listNamespacedService(K8S_NAMESPACE, undefined, undefined, undefined, undefined, K8S_LABEL_SELECTOR);
   let resourceVersion = res.body.metadata.resourceVersion;
   let items = res.body.items;
   console.log(`Fetched service list (count: ${items.length}) (resourceVersion: ${resourceVersion})`);
@@ -285,8 +285,8 @@ async function getServiceList() {
 // Fill link URL
 async function fillLinkUrl() {
   console.log('Fetching ingress list');
-  // public listNamespacedIngress (namespace: string, pretty?: string, _continue?: string, fieldSelector?: string, includeUninitialized?: boolean, labelSelector?: string, limit?: number, resourceVersion?: string, timeoutSeconds?: number, watch?: boolean) : Promise<{ response: http.IncomingMessage; body: V1beta1IngressList;  }>
-  let res = await k8sExtentionsApi.listNamespacedIngress(K8S_NAMESPACE, undefined, undefined, undefined, false, K8S_LABEL_SELECTOR);
+  // public listNamespacedIngress (namespace: string, includeUninitialized?: boolean, pretty?: string, _continue?: string, fieldSelector?: string, labelSelector?: string, limit?: number, resourceVersion?: string, timeoutSeconds?: number, watch?: boolean, options: any = {}) : Promise<{ response: http.IncomingMessage; body: V1beta1IngressList;  }> {
+  let res = await k8sExtentionsApi.listNamespacedIngress(K8S_NAMESPACE, undefined, undefined, undefined, undefined, K8S_LABEL_SELECTOR);
   let items = res.body.items;
   console.log(`Fetched ingress list (count: ${items.length})`);
   items.forEach((obj) => {
