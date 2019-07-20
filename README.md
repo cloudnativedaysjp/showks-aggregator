@@ -48,7 +48,7 @@ instance:
 }
 ```
 
-[* See showKs-webapp README for the author JSON format](https://github.com/containerdaysjp/showks-webapp)
+[* See showKs-webapp README for the author JSON format](https://github.com/cloudnativedaysjp/showks-webapp)
 
 
 ### Socket.IO Namespaces
